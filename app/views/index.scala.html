@@ -1,0 +1,54 @@
+@(title: String)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.css"))">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+
+        <script src="@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))"></script>
+        <script src="@routes.Assets.at("javascripts/app.js")"></script>
+
+    </head>
+    <body>
+
+        <div id="content">
+            <div id="header">
+                Your Name: <input type="text" name="user" id="userField" value="John Doe" />
+                <select id="roomSelect">
+                    <option id="room1" value="room1">Select the room</option>
+                    <option id="room1" value="room1">Room1</option>
+                    <option id="room2" value="room2">Room2</option>
+                    <option id="room3" value="room3">Room3</option>
+                    <option id="room4" value="room4">Room4</option>
+                </select>
+            </div>
+
+            <div id="chat" class="chat">
+                Time<br/>
+                <strong>says: </strong>sample text :-) with emots! :D :-?<br/>
+                <hr/>
+            </div>
+
+            <div id="emoticons">
+                <span><img class="emot" draggable="true" src="./assets/images/emot03.png" value=":D"> </span>
+                <span><img class="emot" draggable="true" src="./assets/images/emot09.png" value=":-)"> </span>
+                <span><img class="emot" draggable="true" src="./assets/images/emot11.png" value=":o"> </span>
+                <span><img class="emot" draggable="true" src="./assets/images/emot14.png" value=":<3"> </span>
+                <span><img class="emot" draggable="true" src="./assets/images/emot15.png" value=":)"> </span>
+                <span><img class="emot" draggable="true" src="./assets/images/emot17.png" value=":-?"> </span>
+            </div>
+
+            <div id="footer">
+                <form id="sendForm">
+                    <input type="text" name="chat" id="textField" placeholder="Say something" class="input-block-level" />
+                    <input type="submit" class="btn btn-primary" id="sendMessage" value="Send"/>
+                </form>
+            </div>
+        </div>
+
+    </body>
+</html>

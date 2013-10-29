@@ -1,0 +1,59 @@
+body {
+    font-family: helvetica;
+    color: #333;
+    padding-left: 25px;
+    padding-top: 25px;
+    background: #CCC;
+}
+
+#chat {
+    min-height: 200px;
+    background: #AAA;
+    width: 620px;
+    padding: 10px;
+}
+
+#emoticons {
+    min-height: 100px;
+    background: #DDD;
+    width: 620px;
+    padding: 10px;
+}
+
+.emot:hover {
+    box-shadow:4px -4px 10px 3px #888, inset 4px -4px 10px 3px #888;
+}
+
+#textField {
+    width: 540px;
+    position: relative;
+    top: 4px;
+}
+
+#userField {
+    width: 360px;
+    position: relative;
+    top: 1px;
+}
+
+#header {
+    color: #EEE;
+    width: 620px;
+    height: 34px;
+    font-weight: bold;
+    padding: 10px;
+    background: #666;
+}
+
+#footer {
+    color: #EEE;
+    width: 620px;
+    height: 34px;
+    font-weight: bold;
+    padding: 10px;
+    background: #666;
+}
+
+#roomSelect {
+    width: 150px;
+}
