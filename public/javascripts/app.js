@@ -14,8 +14,14 @@ $(function () {
 
     $("#chat").html(function () {
         return replaceEmoticons($(this).html());
-
     });
+	
+	$('#chat').bind("DOMSubtreeModified",function(){
+		// TODO replace emots
+		console.log('change chat');
+		html = $(this).html();
+		$(this).innerHTML = replaceEmoticons(html);
+	});
 
     $(".emot").click(function () {
         icon = $(this).attr("value");
@@ -36,31 +42,34 @@ $(function () {
     });
 
     var chat = document.querySelector('.chat');
-    chat.addEventListener('dragover', charOver, false);
+    chat.addEventListener('dragover', chatOver, false);
     chat.addEventListener('dragleave', chatLeave, false);
     chat.addEventListener('drop', chatDrop, false);
 
 });
 
-// Drag and Drop helper functions
+// Drag and Drop event functions
 
 function emotStart(e) {
     console.log("dragstart");
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/html', this.innerHTML);
+    e.dataTransfer.effectAllowed = 'copy';
+    e.dataTransfer.setData('emot', this.id);
 };
 
 function chatDrop(e) {
     console.log('chatDrop');
-    $("#chat").text( $("#chat").text + e.attr('value') );
+	el = e.dataTransfer.getData('emot');
+    $("#chat").append($('#' + el).attr('value'));
+	$('#chat').append('<br /><hr />');
 }
 
 function chatLeave(e) {
-//    console.log('chatLeave');
 }
 
-function charOver(e) {
-//    console.log('chatOver');
+function chatOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+    return false;
 }
 
 // Emoticons tranformations
@@ -90,7 +99,5 @@ function replaceEmoticons(text) {
             match;
     });
 }
-
-replaceEmoticons('this is a simple test :-) :-| :D :)');
 
 
