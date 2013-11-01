@@ -1,14 +1,12 @@
-/**
- * Created with IntelliJ IDEA.
- * User: fdziedzic
- * Date: 29.10.13
- * Time: 17:33
- * To change this template use File | Settings | File Templates.
- */
-
 $(function () {
-    $("#sendForm").submit(function (event) {
-        alert("asda");
+    $('#sendForm').submit(function (event) {
+		console.log();
+		msg = $('#msg').val();
+		time = new Date();
+		sendMsg(msg, time)
+		$('#chat').append(enchanceMsg(msg, time));
+		$('#msg').val('');
+		$("#chat").scrollTop($("#chat")[0].scrollHeight);
         event.preventDefault();
     });
 
@@ -17,20 +15,24 @@ $(function () {
     });
 	
 	$('#chat').bind("DOMSubtreeModified",function(){
-		// TODO replace emots
-		console.log('change chat');
-		html = $(this).html();
-		$(this).innerHTML = replaceEmoticons(html);
+		console.log('chat change');
+		var html = $('#chat').html();
+		for (e in emoticons) {
+			if (html.indexOf(e) !== -1) {
+				$('#chat').html(replaceEmoticons(html));
+			}
+		}
 	});
 
     $(".emot").click(function () {
         icon = $(this).attr("value");
-        $("#textField").val(function (index, val) {
+        $('#msg').val(function (index, val) {
             return val + ' ' + icon;
         });
     });
 
     $("#roomSelect").change(function () {
+		console.log($(this).val());
         if ($(this).val() === 'room1') {
             alert("asdsa");
         }
@@ -43,10 +45,30 @@ $(function () {
 
     var chat = document.querySelector('.chat');
     chat.addEventListener('dragover', chatOver, false);
-    chat.addEventListener('dragleave', chatLeave, false);
     chat.addEventListener('drop', chatDrop, false);
 
 });
+
+// Text manipulation
+
+function enchanceMsg(msg, time) {
+    // TODO format date
+	return 'At: ' + time.toUTCString() + '<br />' +
+		'<strong>' + $('#user').val()
+		+ ': </strong>' + msg + '<hr />';
+}
+
+// Ajax calls
+
+function sendMsg(msg, time) {
+	json = {
+		'room' : $('#roomSelect').val(),
+		'user' : $('#user'),
+		'msg' : msg,
+		'time' : time
+	}
+    // TODO ajax call
+}
 
 // Drag and Drop event functions
 
@@ -57,33 +79,35 @@ function emotStart(e) {
 };
 
 function chatDrop(e) {
-    console.log('chatDrop');
+    // TODO call submit on sendForm
 	el = e.dataTransfer.getData('emot');
-    $("#chat").append($('#' + el).attr('value'));
-	$('#chat').append('<br /><hr />');
-}
-
-function chatLeave(e) {
+	time = new Date();
+	msg = $('#' + el).attr('value');
+	sendMsg(msg, time);
+    console.log('chatDrop');
+    $("#chat").append(enchanceMsg(msg, time));
 }
 
 function chatOver(e) {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'copy';
-    return false;
 }
 
 // Emoticons tranformations
 
+var emoticons = {
+		':D': 'emot03.png',
+		':-)': 'emot09.png',
+		':o': 'emot11.png',
+		':&lt;3': 'emot14.png',
+		':)': 'emot15.png',
+		':-?': 'emot17.png'
+	};
+
 function replaceEmoticons(text) {
-    var emoticons = {
-            ':D': 'emot03.png',
-            ':-)': 'emot09.png',
-            ':o': 'emot11.png',
-            ':<3': 'emot14.png',
-            ':)': 'emot15.png',
-            ':-?': 'emot17.png'
-        }, url = "./assets/images/", patterns = [],
-        metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
+	var url = "./assets/images/";
+	var patterns = [];
+	var metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
 
     // build a regex pattern for each defined property
     for (var i in emoticons) {
@@ -99,5 +123,3 @@ function replaceEmoticons(text) {
             match;
     });
 }
-
-

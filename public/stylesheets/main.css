@@ -6,11 +6,18 @@ body {
     background: #CCC;
 }
 
+hr {
+	margin: 5px 0;
+}
+
 #chat {
-    min-height: 200px;
+    margin-top: 54px;
+    min-height: 400px;
+	max-height: 400px;
     background: #AAA;
     width: 620px;
     padding: 10px;
+	overflow: auto;
 }
 
 #emoticons {
@@ -24,19 +31,21 @@ body {
     box-shadow:4px -4px 10px 3px #888, inset 4px -4px 10px 3px #888;
 }
 
-#textField {
+#msg {
     width: 540px;
     position: relative;
     top: 4px;
 }
 
-#userField {
+#user {
     width: 360px;
     position: relative;
     top: 1px;
 }
 
 #header {
+    position: absolute;
+    top: 25px;
     color: #EEE;
     width: 620px;
     height: 34px;
