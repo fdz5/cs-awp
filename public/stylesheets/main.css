@@ -6,8 +6,13 @@ body {
     background: #CCC;
 }
 
-hr {
-	margin: 5px 0;
+#chat hr {
+	margin: 8px 0;
+}
+
+#error-ph {
+	margin-top: 10px;
+	font-weight: normal;
 }
 
 #chat {
