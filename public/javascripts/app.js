@@ -73,30 +73,47 @@ var chatRoom;
 // Text manipulation
 
 function enchanceMsg(msg, time, user) {
-    return '<strong>At</strong>: ' + time + '<br />' +
+    return '<strong>at</strong>: ' + time + '<br />' +
         '<strong>' + user + ': </strong>' + msg + '<hr />';
 }
 
 // Ajax calls
 
 function sendMsg(msg, time) {
-    json = {
-        room: $('#roomSelect').val(),
-        user: $('#user').val(),
-        msg: msg,
-        time: dtFormat(time)
-    }
-    console.log(json);
-    $.ajax({
-        url: '/chat',
-        type: "POST",
-        data: JSON.stringify(json),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            console.log('success');
+    room = $('#roomSelect').val();
+    if (validRoom(room)) {
+        json = {
+            room: room,
+            user: $('#user').val(),
+            msg: msg,
+            time: dtFormat(time)
         }
-    })
+        console.log(json);
+        $.ajax({
+            url: '/chat',
+            type: "POST",
+            data: JSON.stringify(json),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log('success');
+            }
+        })
+    }
+}
+
+/** check whether the room is specified */
+function validRoom(room) {
+    if (room.trim() === '') {
+        if ($('#error-ph').html() === '') {
+            $('#error-ph').append(error('Please choose the chat room first'));
+            $('#error').delay(3500).fadeOut("slow", function () {
+                $(this).remove();
+            });
+        }
+        return false
+    }
+    return true
 }
 
 // Drag and Drop event functions
@@ -120,7 +137,7 @@ function chatDrop(e) {
         sendMsg(msg, time);
     } else {
         if ($('#error-ph').html() === '') {
-            $('#error-ph').append('<div id="error" class="alert alert-error"><a class="close" data-dismiss="alert">&times;</a><strong>Error!</strong> Please specify your name.</div>');
+            $('#error-ph').append(error('Please specify your name'));
             $('#error').delay(3500).fadeOut("slow", function () {
                 $(this).remove();
             });
@@ -191,4 +208,9 @@ function dtFormat(now) {
         second = "0" + second;
     }
     return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+}
+
+/** returns div containing error message with proper html tags */
+function error(message) {
+    return '<div id="error" class="alert alert-error"><a class="close" data-dismiss="alert">&times;</a><strong>Error!</strong> ' + message + '.</div>';
 }
