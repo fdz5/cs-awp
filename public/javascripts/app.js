@@ -53,7 +53,6 @@ $(function () {
     function addMsg(msg) {
         data = JSON.parse(msg.data);
         $('#chat').prepend(enchanceMsg(data.msg, data.time, data.user));
-        $('#msg').val('');
 //        $('#chat').scrollTop($('#chat')[0].scrollHeight);
     };
 
@@ -96,6 +95,7 @@ function sendMsg(msg, time) {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
+                $('#msg').val('');
                 console.log('success');
             }
         })
