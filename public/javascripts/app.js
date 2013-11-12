@@ -8,16 +8,6 @@ $(function () {
         event.preventDefault();
     });
 
-    /** listen the chat div for change its html and replace emoticons with their images if so */
-    $('#chat').bind("DOMSubtreeModified", function () {
-        var html = $('#chat').html();
-        for (e in emoticons) {
-            if (html.indexOf(e) !== -1) {
-                $('#chat').html(replaceEmoticons(html));
-            }
-        }
-    });
-
     /** add emoticon string representation to msg input text */
     $(".emot").click(function () {
         icon = $(this).attr("value");
@@ -52,8 +42,8 @@ $(function () {
      * however, it does not work... */
     function addMsg(msg) {
         data = JSON.parse(msg.data);
-        $('#chat').prepend(enchanceMsg(data.msg, data.time, data.user));
-//        $('#chat').scrollTop($('#chat')[0].scrollHeight);
+        $('#chat').append(enchanceMsg(replaceEmoticons(data.msg), data.time, data.user));
+        $('#chat').scrollTop($('#chat')[0].scrollHeight);
     };
 
     /** start listening on messages from selected room */
@@ -72,7 +62,7 @@ var chatRoom;
 // Text manipulation
 
 function enchanceMsg(msg, time, user) {
-    return '<strong>at</strong>: ' + time + '<br />' +
+    return '<strong>at</strong>: ' + time + '<br>' +
         '<strong>' + user + ': </strong>' + msg + '<hr />';
 }
 
