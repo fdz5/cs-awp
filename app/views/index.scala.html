@@ -11,15 +11,21 @@
 
         <script src="@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))"></script>
         <script src="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))"></script>
-        <script src="@routes.Assets.at("javascripts/app.js")"></script>
+        <script src="@routes.WebJarAssets.at(WebJarAssets.locate("angular.min.js"))"></script>
+        <script src="@routes.Assets.at("javascripts/appAng.js")"></script>
+        <script src="@routes.Assets.at("javascripts/controllers.js")"></script>
+        <script src="@routes.Assets.at("javascripts/services.js")"></script>
     </head>
-    <body>
-        <div id="content">
-			
-            <div id="chat" class="chat">
+    <body ng-app="chat">
+        <div id="content" ng-controller="ChatCtrl">
+
+            <div id="chat" class="chat radiused">
+                <span ng-repeat="msg in msgs">at: <strong>{{msg.time}}</strong><br/>
+                    <strong>{{msg.user}}</strong>: {{msg.msg}}<br /><hr />
+                </span>
             </div>
 
-            <div id="emoticons">
+            <div id="emoticons" class="radiused">
                 <span><img id="emot03" class="emot" draggable="true" src="./assets/images/emot03.png" value=":D"> </span>
                 <span><img id="emot09" class="emot" draggable="true" src="./assets/images/emot09.png" value=":-)"> </span>
                 <span><img id="emot11" class="emot" draggable="true" src="./assets/images/emot11.png" value=":o"> </span>
@@ -28,22 +34,17 @@
                 <span><img id="emot17" class="emot" draggable="true" src="./assets/images/emot17.png" value=":-?"> </span>
             </div>
 
-            <form id="sendForm">
+            <form id="sendForm" ng-submit="submit()">
                 <div id="header">
-                    Your name: <input type="text" name="user" id="user" required />
-                    <select id="roomSelect">
-                        <option id="room1" value="">Select the room</option>
-                        <option id="room1" value="room1">Room1</option>
-                        <option id="room2" value="room2">Room2</option>
-                        <option id="room3" value="room3">Room3</option>
-                        <option id="room4" value="room4">Room4</option>
-                    </select>
+                    Your name: <input value="{{user}}" ng-model="user" type="text" name="user" id="user" required />
+                    <select ng-model="chat" ng-change="setCurrentRoom(chat)"
+                            ng-options="r.name for r in rooms" id="roomSelect"></select>
 					<div id="error-ph"></div>
                 </div>
-				
+
                 <div id="footer">
-                    <input type="text" name="chat" id="msg" placeholder="Say something" class="input-block-level" required />
-                    <input type="submit" class="btn btn-primary" id="sendMessage" value="Send"/>
+                    <input ng-model="msg" type="text" name="chat" id="msg" placeholder="Say something" class="input-block-level" required />
+                    <input ng-click="submit()" type="submit" class="btn btn-primary" id="sendMessage" value="Send"/>
                 </div>
             </form>
         </div>

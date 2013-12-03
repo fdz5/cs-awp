@@ -12,6 +12,8 @@ object ApplicationBuild extends Build {
     "org.webjars" %% "webjars-play" % "2.1.0-3",
     "org.webjars" % "bootstrap" % "2.3.2",
     "org.webjars" % "jquery" % "2.0.3-1",
+    "org.webjars" % "angularjs" % "1.2.3",
+    "org.webjars" % "webjars-locator" % "0.6",
     jdbc,
     anorm
   )

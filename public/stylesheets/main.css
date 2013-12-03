@@ -7,22 +7,22 @@ body {
 }
 
 #chat hr {
-	margin: 8px 0;
+    margin: 8px 0;
 }
 
 #error-ph {
-	margin-top: 10px;
-	font-weight: normal;
+    margin-top: 10px;
+    font-weight: normal;
 }
 
 #chat {
     margin-top: 54px;
     min-height: 400px;
-	max-height: 400px;
+    max-height: 400px;
     background: #AAA;
     width: 620px;
     padding: 10px;
-	overflow: auto;
+    overflow: auto;
 }
 
 #emoticons {
@@ -33,7 +33,7 @@ body {
 }
 
 .emot:hover {
-    box-shadow:4px -4px 10px 3px #888, inset 4px -4px 10px 3px #888;
+    box-shadow: 4px -4px 10px 3px #888, inset 4px -4px 10px 3px #888;
 }
 
 #msg {
@@ -70,4 +70,10 @@ body {
 
 #roomSelect {
     width: 150px;
+}
+
+.radiused {
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
 }

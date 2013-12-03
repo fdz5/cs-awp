@@ -28,13 +28,13 @@ $(function () {
     /** add drag and drop event to all emoticonst */
     var emots = document.querySelectorAll('.emot');
     [].forEach.call(emots, function (emot) {
-        emot.addEventListener('dragstart', emotStart, false);
+        emot.addEventListener('dragstart', emotStart(e), false);
     });
 
     /** add drag and drop events to chat div */
     var chat = document.querySelector('.chat');
-    chat.addEventListener('dragover', chatOver, false);
-    chat.addEventListener('drop', chatDrop, false);
+    chat.addEventListener('dragover', chatOver(e), false);
+    chat.addEventListener('drop', chatDrop(e), false);
 
     /** handle incoming messages: add to chat div.
      * Prepend is used in order to keep the latest messages on top,
