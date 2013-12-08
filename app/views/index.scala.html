@@ -8,21 +8,20 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.css"))">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-
         <script src="@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))"></script>
-        <script src="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))"></script>
         <script src="@routes.WebJarAssets.at(WebJarAssets.locate("angular.min.js"))"></script>
+        <script src="@routes.WebJarAssets.at(WebJarAssets.locate("angular-sanitize.min.js"))"></script>
         <script src="@routes.Assets.at("javascripts/appAng.js")"></script>
-        <script src="@routes.Assets.at("javascripts/controllers.js")"></script>
         <script src="@routes.Assets.at("javascripts/services.js")"></script>
+        <script src="@routes.Assets.at("javascripts/controllers.js")"></script>
+
+
     </head>
     <body ng-app="chat">
         <div id="content" ng-controller="ChatCtrl">
 
-            <div id="chat" class="chat radiused">
-                <span ng-repeat="msg in msgs">at: <strong>{{msg.time}}</strong><br/>
-                    <strong>{{msg.user}}</strong>: {{msg.msg}}<br /><hr />
-                </span>
+            <div id="chat" class="chat">
+                <span ng-repeat="msg in msgs" ng-bind-html="msg"></span>
             </div>
 
             <div id="emoticons" class="radiused">
@@ -36,15 +35,15 @@
 
             <form id="sendForm" ng-submit="submit()">
                 <div id="header">
-                    Your name: <input value="{{user}}" ng-model="user" type="text" name="user" id="user" required />
-                    <select ng-model="chat" ng-change="setCurrentRoom(chat)"
+                    Your name: <input value="{{user}}" ng-model="user" type="text" name="user" id="user" required=""/>
+                    <select ng-model="room" ng-change="setCurrentRoom(room)"
                             ng-options="r.name for r in rooms" id="roomSelect"></select>
 					<div id="error-ph"></div>
                 </div>
 
                 <div id="footer">
-                    <input ng-model="msg" type="text" name="chat" id="msg" placeholder="Say something" class="input-block-level" required />
-                    <input ng-click="submit()" type="submit" class="btn btn-primary" id="sendMessage" value="Send"/>
+                    <input ng-model="msg" type="text" name="chat" id="msg" placeholder="Say something" class="input-block-level" required="" />
+                    <input type="submit" class="btn btn-primary" id="sendMessage" value="Send"/>
                 </div>
             </form>
         </div>

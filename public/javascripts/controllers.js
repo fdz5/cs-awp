@@ -2,11 +2,12 @@
 
 /** Controllers */
 angular.module('chat.controllers', ['chat.services']).
-    controller('ChatCtrl', function ($scope, $http, chatModel) {
+    controller('ChatCtrl', function ($scope, $http, chatModel, $sce) {
         $scope.rooms = chatModel.getRooms();
         $scope.msgs = [];
         $scope.msg = "";
         $scope.user = "Joe";
+        $scope.room = $scope.rooms[0];
 
         /** change current room, restart EventSource connection */
         $scope.setCurrentRoom = function (room) {
@@ -16,30 +17,28 @@ angular.module('chat.controllers', ['chat.services']).
             }
             $scope.msgs = [];
             $scope.listen();
+
         };
 
         /** posting chat text to server */
         $scope.submit = function () {
-            if (validRoom($scope.room.value)) {
-                $http.post("/chat", {
-                    room: $scope.room.value,
-                    user: $scope.user,
-                    msg: $scope.msg,
-                    time: dtFormat(new Date())
-                });
-                $scope.msg = "";
-            }
+            console.log("sending message");
+            $http.post("/chat", {
+                room: $scope.room.value,
+                user: $scope.user,
+                msg: $scope.msg,
+                time: dtFormat(new Date())
+            });
+            $scope.msg = "";
         };
 
         /** handle incoming messages: add to messages array */
         $scope.addMsg = function (message) {
             var data = JSON.parse(message.data);
             $scope.$apply(function () {
-                $scope.msgs.push({
-                    user: data.user,
-                    time: data.time,
-                    msg: replaceEmoticons(data.msg)
-                });
+                $scope.msgs.push($sce.trustAsHtml(
+                    enchanceMsg(replaceEmoticons(data.msg), data.time, data.user)
+                ));
             });
             $('#chat').scrollTop($('#chat')[0].scrollHeight);
         };
@@ -75,18 +74,10 @@ angular.module('chat.controllers', ['chat.services']).
 
         function chatDrop(e) {
             if (e.stopPropagation) e.stopPropagation();
-            if ($scope.user !== '') {
-                var el = e.dataTransfer.getData('emot');
-                $scope.msg = $('#' + el).attr('value');
-                $scope.submit();
-            } else {
-                if ($('#error-ph').html() === '') {
-                    $('#error-ph').append(error('Please specify your name'));
-                    $('#error').delay(3500).fadeOut("slow", function () {
-                        $(this).remove();
-                    });
-                }
-            }
+            var el = e.dataTransfer.getData('emot');
+            $scope.msg = angular.element('#' + el).attr('value');
+            // TODO add form validation
+            $scope.submit();
             if (e.preventDefault) {
                 e.preventDefault();
             }
@@ -96,22 +87,16 @@ angular.module('chat.controllers', ['chat.services']).
             return false;
         }
 
+        $scope.listen();
+
     });
 
-/** check whether the room is specified */
-function validRoom(room) {
-    if (room.trim() === "") {
-        if ($('#error-ph').html() === '') {
-            $('#error-ph').append(error('Please choose the chat room first'));
-            $('#error').delay(3500).fadeOut("slow", function () {
-                $(this).remove();
-            });
-        }
-        return false
-    }
-    return true
-}
+// Text manipulation
 
+function enchanceMsg(msg, time, user) {
+    return '<strong>at</strong>: ' + time + '<br>' +
+        '<strong>' + user + ': </strong>' + msg + '<hr />';
+}
 
 // Emoticons tranformations
 
@@ -169,9 +154,4 @@ function dtFormat(now) {
         second = "0" + second;
     }
     return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
-}
-
-/** returns div containing error message with proper html tags */
-function error(message) {
-    return '<div id="error" class="alert alert-error"><a class="close" data-dismiss="alert">&times;</a><strong>Error!</strong> ' + message + '.</div>';
 }
