@@ -25,15 +25,15 @@
             </div>
 
             <div id="emoticons" class="radiused">
-                <span><img id="emot03" class="emot" draggable="true" src="./assets/images/emot03.png" value=":D"> </span>
-                <span><img id="emot09" class="emot" draggable="true" src="./assets/images/emot09.png" value=":-)"> </span>
-                <span><img id="emot11" class="emot" draggable="true" src="./assets/images/emot11.png" value=":o"> </span>
-                <span><img id="emot14" class="emot" draggable="true" src="./assets/images/emot14.png" value=":<3"> </span>
-                <span><img id="emot15" class="emot" draggable="true" src="./assets/images/emot15.png" value=":)"> </span>
-                <span><img id="emot17" class="emot" draggable="true" src="./assets/images/emot17.png" value=":-?"> </span>
+                <span><img ng-click="emot($event)" id="emot03" class="emot" draggable="true" src="./assets/images/emot03.png" value=":D"> </span>
+                <span><img ng-click="emot($event)" id="emot09" class="emot" draggable="true" src="./assets/images/emot09.png" value=":-)"> </span>
+                <span><img ng-click="emot($event)" id="emot11" class="emot" draggable="true" src="./assets/images/emot11.png" value=":o"> </span>
+                <span><img ng-click="emot($event)" id="emot14" class="emot" draggable="true" src="./assets/images/emot14.png" value=":<3"> </span>
+                <span><img ng-click="emot($event)" id="emot15" class="emot" draggable="true" src="./assets/images/emot15.png" value=":)"> </span>
+                <span><img ng-click="emot($event)" id="emot17" class="emot" draggable="true" src="./assets/images/emot17.png" value=":-?"> </span>
             </div>
 
-            <form id="sendForm" ng-submit="submit()">
+            <form id="sendForm" name="sendForm" ng-submit="submit()">
                 <div id="header">
                     Your name: <input value="{{user}}" ng-model="user" type="text" name="user" id="user" required=""/>
                     <select ng-model="room" ng-change="setCurrentRoom(room)"

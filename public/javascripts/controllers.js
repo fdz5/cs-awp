@@ -20,6 +20,12 @@ angular.module('chat.controllers', ['chat.services']).
 
         };
 
+        /** add emoticon string representation to msg input text */
+        $scope.emot = function ($event) {
+            var icon = $event.target.getAttribute("value");
+            $scope.msg = $scope.msg + ' ' + icon;
+        }
+
         /** posting chat text to server */
         $scope.submit = function () {
             console.log("sending message");
@@ -75,9 +81,12 @@ angular.module('chat.controllers', ['chat.services']).
         function chatDrop(e) {
             if (e.stopPropagation) e.stopPropagation();
             var el = e.dataTransfer.getData('emot');
-            $scope.msg = angular.element('#' + el).attr('value');
-            // TODO add form validation
-            $scope.submit();
+            if ($scope.user != null && $scope.room != null) {
+                $scope.msg = angular.element('#' + el).attr('value');
+                $scope.submit();
+            } else {
+                alert("Please specify name");
+            }
             if (e.preventDefault) {
                 e.preventDefault();
             }

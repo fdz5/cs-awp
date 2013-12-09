@@ -1,1 +1,1 @@
-app = angular.module('chat', ['chat.services', 'chat.controllers', 'ngSanitize']);
+angular.module('chat', ['chat.services', 'chat.controllers', 'ngSanitize']);
