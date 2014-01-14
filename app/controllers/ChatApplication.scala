@@ -4,6 +4,7 @@ import play.api.mvc.{Action, Controller}
 import play.api.libs.EventSource
 import play.api.libs.json._
 import play.api.libs.iteratee.{Concurrent, Enumeratee}
+import models.ChatBot
 
 /**
  * Chat controller for serving messages.
@@ -39,6 +40,7 @@ object ChatApplication extends Controller {
               xml.Utility.escape(msg.time)
             )
             chatChannel push Json.toJson(escaped)
+            chatChannel push ChatBot.talk(msg.room, msg.msg)
             Ok(Json.obj("status" -> "ok"))
           } else {
             BadRequest(Json.obj("status" -> "error: user cannot be empty"))

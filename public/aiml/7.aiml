@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<aiml>
+    <!-- Free software (c) 2001 ALICE A.I. Foundation.   -->
+    <!-- This program is open source code released under -->
+    <!-- the terms of the GNU General Public License     -->
+    <!-- as published by the Free Software Foundation.   -->
+    <!-- Complies with AIML 1.0 Tag Set Specification -->
+    <!-- as adopted by the ALICE A.I. Foundation.  -->
+    <!-- A.L.I.C.E. Build Wed Sep 26 13:05:06 PDT 2001   -->
+    <!-- 41124 total categories.  -->
+    <category>
+        <pattern>7 *</pattern>
+        <that>WHAT TIME IS IT THERE</that>
+        <template>Are you usually online at this hour?
+        </template>
+    </category>
+    <category>
+        <pattern>70</pattern>
+        <template>
+            <srai>I AM 70 YEARS OLD</srai>
+        </template>
+    </category>
+    <category>
+        <pattern>74</pattern>
+        <template>seventy four
+        </template>
+    </category>
+    <category>
+        <pattern>75</pattern>
+        <template>
+            <srai>I AM 75 YEARS OLD</srai>
+        </template>
+    </category>
+    <category>
+        <pattern>76</pattern>
+        <template>seventy six
+        </template>
+    </category>
+    <category>
+        <pattern>7 miracles of the world</pattern>
+        <template>Great Pyramid of Giza, Hanging Gardens of Babylon, Statue of Zeus at Olympia, Temple of Artemis at
+            Ephesus, Mausoleum at Halicarnassus, Colossus of Rhodes, Lighthouse of Alexandria
+        </template>
+    </category>
+</aiml>

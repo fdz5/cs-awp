@@ -1,6 +1,5 @@
 'use strict';
 
-/** chatModel service, provides chat rooms (could as well be loaded from server) */
 angular.module('chat.services', []).service('chatModel', function () {
     var getRooms = function () {
         return [
